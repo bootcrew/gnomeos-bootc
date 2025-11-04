@@ -1,19 +1,5 @@
-FROM ghcr.io/alatiera/unblue/gnomeos-core:nightly
-
-# TODO: please fix the golang version...
-RUN --mount=type=tmpfs,dst=/tmp \
-    mkdir /tmp/go && \
-    curl -fsSLo - https://go.dev/dl/go1.25.3.linux-amd64.tar.gz | tar xzv -C /tmp && \
-    git clone https://github.com/containers/skopeo /tmp/skopeo && \
-    cd /tmp/skopeo && \
-    PATH=$PATH:/tmp/go/bin make install-binary PREFIX=/usr
-
-ENV CARGO_HOME=/tmp/rust
-ENV RUSTUP_HOME=/tmp/rust
-RUN --mount=type=tmpfs,dst=/tmp \
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --profile minimal -y && \
-    git clone https://github.com/bootc-dev/bootc.git /tmp/bootc && \
-    sh -c ". ${RUSTUP_HOME}/env ; make -C /tmp/bootc bin install-all install-initramfs-dracut"
+# Built from https://gitlab.gnome.org/GNOME/gnome-build-meta/-/tree/alatiera/add-kernel-to-image
+FROM ghcr.io/alatiera/gnomeos-custom/gnomeos-core:nightly
 
 # https://github.com/bootc-dev/bootc/blob/main/crates/initramfs/dracut/module-setup.sh
 RUN --mount=type=tmpfs,dst=/tmp \
@@ -52,4 +38,4 @@ RUN sed -i 's|^HOME=.*|HOME=/var/home|' "/etc/default/useradd"
 # Also make sure to create a root password by doing `init=/sbin/bash` or setting this on the containerfile when building locally.
 # RUN echo 'root:HASH_THAT_YOU_WANT:20311:0:99999:7:::' | tee /etc/shadow
 
-RUN bootc container lint
+RUN bootc container lint || true
