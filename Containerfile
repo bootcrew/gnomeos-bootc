@@ -17,14 +17,10 @@ RUN --mount=type=tmpfs,dst=/tmp \
 RUN rm -rf /boot/vmlinux /usr/share/doc /usr/libexec/gcc
 RUN install -Dpm0755 /boot/* "$(find /usr/lib/modules -maxdepth 1 -type d | tail -n 1)"
 
-RUN rm -rf /boot /home /root /usr/local /srv && \
-    mkdir -p /var && \
-    ln -s /var/home /home && \
-    ln -s /var/roothome /root && \
-    ln -s /var/srv /srv && \
-    ln -s sysroot/ostree ostree && \
-    ln -s /var/usrlocal /usr/local && \
-    mkdir -p /sysroot /boot
+RUN systemd-sysusers
+
+RUN rm -rf /boot && \
+    mkdir -p /boot
 
 RUN rm -rf /usr/include /usr/debug
 

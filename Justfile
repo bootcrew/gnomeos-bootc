@@ -1,7 +1,7 @@
 image_name := env("BUILD_IMAGE_NAME", "gnomeos-bootc")
 image_tag := env("BUILD_IMAGE_TAG", "latest")
 base_dir := env("BUILD_BASE_DIR", ".")
-filesystem := env("BUILD_FILESYSTEM", "ext4")
+filesystem := env("BUILD_FILESYSTEM", "btrfs")
 
 build-containerfile $image_name=image_name:
     sudo podman build --squash-all -t "${image_name}:latest" .
