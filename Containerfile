@@ -19,14 +19,8 @@ RUN install -Dpm0755 /boot/* "$(find /usr/lib/modules -maxdepth 1 -type d | tail
 
 RUN systemd-sysusers
 
-RUN rm -rf /boot /home /root /usr/local /srv && \
-    mkdir -p /var && \
-    ln -s /var/home /home && \
-    ln -s /var/roothome /root && \
-    ln -s /var/srv /srv && \
-    ln -s sysroot/ostree ostree && \
-    ln -s /var/usrlocal /usr/local && \
-    mkdir -p /sysroot /boot
+RUN rm -rf /boot && \
+    mkdir -p /boot
 
 RUN rm -rf /usr/include /usr/debug
 
