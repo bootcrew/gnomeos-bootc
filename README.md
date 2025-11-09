@@ -4,6 +4,13 @@
 
 <img width="2138" height="1332" alt="image" src="https://github.com/user-attachments/assets/51e52947-3819-431d-b24a-4c0691811549" />
 
+## Archived
+
+This repository is no longer needed now that the upstream GNOME OS OCI
+images are bootc compatible.
+
+See this [Merge Request](https://gitlab.gnome.org/GNOME/gnome-build-meta/-/merge_requests/4256)
+
 ## Building
 
 In order to get a running gnomeos-bootc system you can run the following steps:
