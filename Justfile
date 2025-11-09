@@ -26,9 +26,4 @@ generate-bootable-image $base_dir=base_dir $filesystem=filesystem:
         --via-loopback /data/bootable.img \
         --filesystem "${filesystem}" \
         --wipe \
-        --bootloader systemd \
-        --karg splash \
-        --karg quiet \
-        --karg console=tty0 \
-        --karg systemd.debug_shell=ttyS1
-
+        --bootloader systemd
